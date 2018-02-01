@@ -5,13 +5,14 @@
 
 // Arduino ID also used as an user to login to website
 char MyID[] = "";                       //id of the station
+
 //////////////////////////////////////////////////////
 float tempC1;                           //Temperature sensor 1
 float tempC2;                           //Temperature sensor 1
 int tempPin1 = A1;                      //Temperature sensor 1
 int tempPin2 = A0;
 int ledPin = 13;
-int fan1 = 5;
+int fan1 = 5;                           // fan control if needed
 
 byte mac[] = {  0x00, 0xAB, 0xCB, 0xCD, 0xDE, 0x02 };
 IPAddress ip(192, 168, 0, 140);
@@ -52,6 +53,7 @@ void connect() {
     // if you didn't get a connection to the server:
     Serial.println("connection failed");
   }
+
 }
 
 void setup() {
