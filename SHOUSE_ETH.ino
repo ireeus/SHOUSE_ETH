@@ -27,14 +27,15 @@ void connect() {
   Serial.println();
   Serial.print("sens_1: ");
   Serial.print(tempC1, 1);
-  tempC1 = (5.0 * tempC1 * 100.0) / 1024.0;
+  
+  tempC1 = (tempC1 - 0.5 )* 100.0 / 1024.0;
   Serial.print("    |");
 
   tempC2 = analogRead(tempPin2);
   Serial.print("  ");
   Serial.print(" sens_2: ");
   Serial.print(tempC2, 1);
-  tempC2 = (5.0 * tempC2 * 100.0) / 1024.0;
+  tempC2 = (tempC2  - 0.5 )* 100.0 / 1024.0;
 
   if (client.connect(server, 80)) {
     Serial.print("Make a HTTP request ... ");
@@ -59,7 +60,7 @@ void connect() {
 
 void setup() {
   Serial.begin(9600);
-// start the Ethernet connection:
+  // start the Ethernet connection:
   if (Ethernet.begin(mac) == 0) {
     Serial.println("Failed to configure Ethernet using DHCP");
     // try to congifure using IP address instead of DHCP:
@@ -91,7 +92,7 @@ void loop() {
     Serial.println("disconnecting.");
     client.stop();
 
-    delay(3000);
+    delay(6000);
 
     connect();
   }
