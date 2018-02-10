@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////
 
 // Arduino ID also used as an user to login to website
-char MyID[] = "";                       //id of the station
+char MyID[] = "aaaa";                       //id of the station
 
 //////////////////////////////////////////////////////
 float tempC1;                           //Temperature sensor 1
@@ -16,7 +16,8 @@ int fan1 = 5;                           // fan control if needed
 
 byte mac[] = {  0x00, 0xAB, 0xCB, 0xCD, 0xDE, 0x02 };
 IPAddress ip(192, 168, 0, 140);
-IPAddress server(82, 28, 186, 219);
+//IPAddress server(82, 28, 186, 219);// numeric IP (no DNS)
+char server[] = "www.servers.vxm.pl";    // (using DNS)
 
 EthernetClient client;
 
@@ -45,7 +46,7 @@ void connect() {
     client.print("&to=");
     client.print(tempC2);
     client.println(" HTTP/1.0");
-    client.println("HOST: 82.28.186.219");
+    client.println("HOST: www.servers.vxm.pl");
     client.println();
     Serial.println("ok");
   }
@@ -58,16 +59,15 @@ void connect() {
 
 void setup() {
   Serial.begin(9600);
-
-  Serial.print("Setup LAN ... ");
+// start the Ethernet connection:
+  if (Ethernet.begin(mac) == 0) {
+    Serial.println("Failed to configure Ethernet using DHCP");
+    // try to congifure using IP address instead of DHCP:
+    Ethernet.begin(mac, ip);
+  }
   // give the Ethernet shield a second to initialize:
   delay(1000);
-  Ethernet.begin(mac, ip);
-  Serial.println("ok");
-  // Print your WiFi shield's IP address
-  IPAddress ip = Ethernet.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
+  Serial.println("connecting...");
 
 
 
