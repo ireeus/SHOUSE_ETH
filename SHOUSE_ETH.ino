@@ -24,22 +24,13 @@ EthernetClient client;
 
 void connect() {
   tempC1 = analogRead(volts1);
-  Serial.print("------------------------------------");
-  Serial.println();
-  Serial.print("sens_1: ");
-  Serial.print(tempC1, 1);
-  
-  tempC1 = (tempC1 * 100.0 / 1023  ) + 5;           //  tempC1 = (tempC1 - 0.5 )* 100.0 / 1024.0; 
-  Serial.print("    |");
+  tempC1 = (tempC1 * 100.0 / 1023) + 5;           //  tempC1 = (tempC1 - 0.5 )* 100.0 / 1024.0; 
+
 
   tempC2 = analogRead(volts2);
-  Serial.print("  ");
-  Serial.print(" sens_2: ");
-  Serial.print(tempC2, 1);
-  tempC2 = (tempC2 * 100.0 / 1023 )+ 5 ;          // tempC2 = (tempC2 - 0.5 )* 100.0 / 1024.0
+  tempC2 = (tempC2 * 100.0 / 1023) + 5 ;          // tempC2 = (tempC2 - 0.5 )* 100.0 / 1024.0
 
   if (client.connect(server, 80)) {
-    Serial.print("Make a HTTP request ... ");
     client.print("GET /sh/recive_data.php");
     client.print("?un=");
     client.print(MyID);                               //Post The Serial Number
@@ -50,7 +41,6 @@ void connect() {
     client.println(" HTTP/1.0");
     client.println("HOST: www.servers.vxm.pl");
     client.println();
-    Serial.println("ok");
   }
   else {
     // if you didn't get a connection to the server:
@@ -71,30 +61,19 @@ void setup() {
   delay(1000);
   Serial.println("connecting...");
 
-
-
-  connect();
-
 }
 
 void loop() {
-
   if (client.available()) {
     char c = client.read();
     Serial.print(c);
     // Serial.println("");
-
-
   }
 
   // if the server's disconnected, stop the client:
   if (!client.connected()) {
-    Serial.println();
-    Serial.println("disconnecting.");
     client.stop();
-
     delay(6000);
-
     connect();
   }
 
