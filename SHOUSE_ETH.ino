@@ -7,12 +7,13 @@
 char MyID[] = "aaaa";                       //id of the station
 
 //////////////////////////////////////////////////////
-float tempC1;                           //Temperature sensor 1
-float tempC2;                           //Temperature sensor 1
-int tempPin1 = A1;                      //Temperature sensor 1
-int tempPin2 = A0;
+int volts1 = A1;                     // Volts pin 1         
+int volts2 = A0;                     // Volts pin 0
 int ledPin = 13;
 int fan1 = 5;                           // fan control if needed
+float tempC1;                           //Temperature sensor 1
+float tempC2;                           //Temperature sensor 1
+
 
 byte mac[] = {  0x00, 0xAB, 0xCB, 0xCD, 0xDE, 0x02 };
 IPAddress ip(192, 168, 0, 140);
@@ -22,20 +23,20 @@ char server[] = "www.servers.vxm.pl";    // (using DNS)
 EthernetClient client;
 
 void connect() {
-  tempC1 = analogRead(tempPin1);
+  tempC1 = analogRead(volts1);
   Serial.print("------------------------------------");
   Serial.println();
   Serial.print("sens_1: ");
   Serial.print(tempC1, 1);
   
-  tempC1 = (tempC1 - 0.5 )* 100.0 / 1024.0;
+  tempC1 = (tempC1 * 100.0 / 1023  ) + 5;           //  tempC1 = (tempC1 - 0.5 )* 100.0 / 1024.0; 
   Serial.print("    |");
 
-  tempC2 = analogRead(tempPin2);
+  tempC2 = analogRead(volts2);
   Serial.print("  ");
   Serial.print(" sens_2: ");
   Serial.print(tempC2, 1);
-  tempC2 = (tempC2  - 0.5 )* 100.0 / 1024.0;
+  tempC2 = (tempC2 * 100.0 / 1023 )+ 5 ;          // tempC2 = (tempC2 - 0.5 )* 100.0 / 1024.0
 
   if (client.connect(server, 80)) {
     Serial.print("Make a HTTP request ... ");
