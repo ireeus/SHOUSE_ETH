@@ -6,9 +6,11 @@
 // Arduino ID also used as an user to login to website
 char MyID[] = "aaaa";                       //id of the station
 
+// When host is an IP address
 char Host[] = "HOST: 82.28.186.219"; 
 IPAddress server(82, 28, 186, 219);// numeric IP (no DNS)
 
+// When host is an URL address
 //char Host[] = "HOST: www.servers.vxm.pl";
 //char server[] = "www.servers.vxm.pl";    // (using DNS)
 
