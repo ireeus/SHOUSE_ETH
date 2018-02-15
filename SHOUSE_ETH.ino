@@ -6,6 +6,13 @@
 // Arduino ID also used as an user to login to website
 char MyID[] = "aaaa";                       //id of the station
 
+char Host[] = "HOST: 82.28.186.219"; 
+IPAddress server(82, 28, 186, 219);// numeric IP (no DNS)
+
+//char Host[] = "HOST: www.servers.vxm.pl";
+//char server[] = "www.servers.vxm.pl";    // (using DNS)
+
+
 //////////////////////////////////////////////////////
 int volts1 = A1;                     // Volts pin 1         
 int volts2 = A0;                     // Volts pin 0
@@ -17,8 +24,7 @@ float tempC2;                           //Temperature sensor 1
 
 byte mac[] = {  0x00, 0xAB, 0xCB, 0xCD, 0xDE, 0x02 };
 IPAddress ip(192, 168, 0, 140);
-//IPAddress server(82, 28, 186, 219);// numeric IP (no DNS)
-char server[] = "www.servers.vxm.pl";    // (using DNS)
+
 
 EthernetClient client;
 
@@ -39,7 +45,7 @@ void connect() {
     client.print("&to=");
     client.print(tempC2);
     client.println(" HTTP/1.0");
-    client.println("HOST: www.servers.vxm.pl");
+    client.println(Host);
     client.println();
   }
   else {
